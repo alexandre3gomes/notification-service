@@ -3,7 +3,7 @@ server:
 spring:
   data:
     mongodb:
-      uri: mongodb+srv://finances:finances@cluster0.1n7zl.mongodb.net/chat?retryWrites=true&w=majority
+      uri: ${MONGO_URI:mongodb://localhost:27017/notification}
   security:
     oauth2:
       client:

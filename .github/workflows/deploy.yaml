@@ -1,0 +1,20 @@
+name: Deploy app
+on:
+  workflow_run:
+    workflows:
+      - "Build Image"
+    types:
+      - completed
+
+jobs:
+  deploy:
+    name: Production deployment
+    runs-on: ubuntu-latest
+    steps:
+    - name: Update image
+      id: run-kubectl
+      uses: Consensys/kubernetes-action@master
+      env:
+        KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
+      with:
+        args: rollout restart deployments finances-easy-api -n finances

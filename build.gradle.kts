@@ -18,6 +18,7 @@ repositories {
 extra["swaggerVersion"] = "3.0.0"
 extra["springMockkVersion"] = "3.0.1"
 extra["testContainersVersion"] = "1.15.2"
+extra["kotestVersion"] = "4.0.7"
 
 dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-actuator")
@@ -38,8 +39,11 @@ dependencies {
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 	runtimeOnly("io.micrometer:micrometer-registry-prometheus")
 	testImplementation("com.ninja-squad:springmockk:${property("springMockkVersion")}")
-	testImplementation("org.springframework.boot:spring-boot-starter-test")
+	testImplementation("org.springframework.boot:spring-boot-starter-test") {
+		exclude("org.assertj:assertj-core")
+	}
 	testImplementation("org.testcontainers:mongodb:${property("testContainersVersion")}")
+	testImplementation("io.kotest:kotest-assertions:${property("kotestVersion")}")
 	testImplementation("io.projectreactor:reactor-test")
 	testImplementation("org.springframework.security:spring-security-test")
 }
@@ -47,7 +51,7 @@ dependencies {
 tasks.withType<KotlinCompile> {
 	kotlinOptions {
 		freeCompilerArgs = listOf("-Xjsr305=strict")
-		jvmTarget = "11"
+		jvmTarget = "15"
 	}
 }
 
